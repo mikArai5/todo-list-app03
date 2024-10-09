@@ -1,0 +1,78 @@
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+select {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+input[type='text'] {
+  padding: 7.7px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+.inputForm {
+  width: 301px;
+}
+
+input[type='submit'] {
+  padding: 0.1em 0.5em;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+li p {
+  width: 262px;
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+}
+
+.todoList {
+  width: 375px;
+  margin: 0 auto;
+}
+
+button,
+input[type="submit"] {
+  background: aliceblue;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #888;
+  font-size: 12px;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  opacity: .7;
+}
+
+.editForm {
+  width: 235px;
+}
+
+select {
+  margin: 0 0 10px;
+  border-radius: 5px;
+}
