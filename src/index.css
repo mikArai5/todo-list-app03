@@ -10,7 +10,8 @@ select {
 
 body, 
 input[type="text"],
-textarea {
+textarea,
+select {
   color: #1E1F26;
   font-weight: normal;
   font-size: 14px;
@@ -149,7 +150,7 @@ textarea {
 
 .inputStatus {
   height: 100%;
-  margin-right: 20px;
+  margin-right: 12px;
 }
 
 .taskNum {

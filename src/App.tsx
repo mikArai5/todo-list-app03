@@ -100,7 +100,12 @@ export const App = () => {
           setFilteredTodos(
             todos.filter((todo) => todo.status === "完了")
           );
-        break;
+          break;
+        case "全て" :
+          setFilteredTodos(
+            todos.filter((todo) => todo.status === "未着手" || "進行中" || "完了")
+          );
+          break;
       default:
         setFilteredTodos(todos);
       }
@@ -138,6 +143,7 @@ export const App = () => {
         value={filter} 
         onChange={(e) => setFilter(e.target.value)}
       >
+        <option value="全て">全て</option>
         <option value="未着手">未着手</option>
         <option value="進行中">進行中</option>
         <option value="完了">完了</option>
