@@ -8,6 +8,15 @@ select {
   padding: 0.5em;
 }
 
+body, 
+input[type="text"],
+textarea {
+  color: #1E1F26;
+  font-weight: normal;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 input:focus,
 select:focus {
   outline: none;
@@ -20,8 +29,13 @@ input[type='text'] {
   border: 1px solid #888;
 }
 
-.inputForm {
-  width: 301px;
+input[type='text'].inputForm {
+  width: auto;
+  margin-right: 0;
+  color: #1E1F26;
+  font-weight: normal;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 input[type='submit'] {
@@ -37,12 +51,11 @@ ul {
 li {
   margin: 0.5em 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
 li p {
-  width: 262px;
   margin: 0;
   padding: 0;
   word-break: break-all;
@@ -55,12 +68,13 @@ li p {
 
 button,
 input[type="submit"] {
-  background: aliceblue;
+  background: #4D648D;
   padding: 6px 10px;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #888;
+  border: none;
   font-size: 12px;
+  color: #FFF;
 }
 
 button:hover,
@@ -69,10 +83,121 @@ input[type="submit"]:hover {
 }
 
 .editForm {
-  width: 235px;
+  width: 100%;
 }
 
 select {
   margin: 0 0 10px;
   border-radius: 5px;
+}
+
+.flex {
+  display: flex;
+}
+
+textarea {
+  resize: none;
+  width: auto;
+  border-radius: 5px;
+  padding: 7.7px;
+  border: 1px solid #888;
+}
+
+.todoList form {
+  display: flex;
+  flex-direction: column;
+  width: 100%s;
+}
+
+.addButton {
+  margin-top: 20px;
+  border: none;
+}
+
+.status {
+  background-color: #D0E1F9;
+  border-radius: 50px;
+  width: auto;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  width: 64px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.addedTask {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.todoContent {
+  width: 50%;
+}
+
+.btns {
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteButton {
+  margin-top: 3px;
+  background-color: #4D648D;
+  border: none;
+}
+
+.inputStatus {
+  height: 100%;
+  margin-right: 20px;
+}
+
+.taskNum {
+  width: 85px;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.todoEditContent {
+  width: 170px;
+}
+
+.todoEditContent input[type="text"] {
+  margin-right: 0;
+  width: 100%;
+}
+
+.todoEditContent textarea {
+  width: 100%;
+  height: 16px;
+  line-height: 1.2;
+  margin-top: 3px;
+}
+
+.addForm {
+  margin-bottom: 50px;
+}
+
+.addedList {
+  border: 2px solid #D0E1F9;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.todoTable tbody tr td {
+  padding: 3px;
+  font-size: 14px;
+}
+
+h2 {
+  text-align: center;
+  background-color: #283655;
+  color: #FFF;
+}
+
+.editConfirmButton {
+  background-color: #4D648D;
+  color: #FFF;
+  border: none;
 }
