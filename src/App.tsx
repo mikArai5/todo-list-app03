@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type Todo = {
-  value: string;
+  title: string;
   readonly id: number;
   status: string;
   detail: string;
@@ -15,14 +15,20 @@ export const App = () => {
   const [ detail, setDetail ] = useState('');
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
+  const [editTodos, setEditTodos] = useState({
+    id: 0,
+    title: "",
+    status: "未着手",
+    detail: ""
+  });
 
 
   const handleSubmit = () => {
     if (!text) return;
 
     const newTodo: Todo = {
-      value: text,
       id: todos.length + 1,
+      title: text,
       status: "未着手",
       detail: detail,
     };
@@ -31,11 +37,11 @@ export const App = () => {
     setDetail('');
   }
 
-  const handleValueEdit = (id: number, value: string) => {
+  const handleTitleEdit = (id: number, title: string) => {
     setTodos((todos) => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
-          todo.value = value;
+          todo.title = title;
         }
         return todo;
       });
@@ -60,7 +66,14 @@ export const App = () => {
     setTodoEditing(true);
   }
 
-  const onUpdateSubmit = () => {
+  const onUpdateSubmit = (id: number, title: string, status: string, detail:string) => {
+    setEditTodos({
+      id: id,
+      title: title,
+      status: status,
+      detail: detail,
+    });
+    console.log(todos);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -167,10 +180,10 @@ export const App = () => {
                   <div className='todoEditContent'>
                     <input 
                     type="text" 
-                    value={todo.value} 
+                    value={todo.title} 
                     autoFocus
                     className='editForm'
-                    onChange={(e) => handleValueEdit(todo.id, e.target.value)}
+                    onChange={(e) => handleTitleEdit(todo.id, e.target.value)}
                     />
                     <textarea 
                       className='editTextarea'
@@ -187,7 +200,7 @@ export const App = () => {
                         <span className='status'>{todo.status}</span>
                       </td>
                       <td>
-                        <p>{todo.value}</p>
+                        <p>{todo.title}</p>
                       </td>
                     </tr>
                     <tr>
@@ -203,7 +216,7 @@ export const App = () => {
               }
               <div className='btns'>
                 { todoEditing ?
-                  <button className='editConfirmButton' onClick={() => onUpdateSubmit()}>確定</button>
+                  <button className='editConfirmButton' onClick={() => onUpdateSubmit(todo.id, todo.title, todo.detail, todo.status)}>確定</button>
                   : <button className='editConfirmButton' onClick={() => onEdit(todo.id)}>更新</button>
                 }
                 <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
