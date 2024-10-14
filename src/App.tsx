@@ -15,12 +15,8 @@ export const App = () => {
   const [ detail, setDetail ] = useState('');
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
-  const [editTodos, setEditTodos] = useState({
-    id: 0,
-    title: "",
-    status: "未着手",
-    detail: ""
-  });
+  const [ editTodos, setEditTodos ] = useState<Todo[]>([]);
+
 
 
   const handleSubmit = () => {
@@ -38,7 +34,7 @@ export const App = () => {
   }
 
   const handleTitleEdit = (id: number, title: string) => {
-    setTodos((todos) => {
+    setEditTodos((todos) => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
           todo.title = title;
@@ -50,7 +46,7 @@ export const App = () => {
   }
 
   const handleDetailEdit = (id: number, detail: string) => {
-    setTodos((todos) => {
+    setEditTodos((todos) => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
           todo.detail = detail;
@@ -66,14 +62,8 @@ export const App = () => {
     setTodoEditing(true);
   }
 
-  const onUpdateSubmit = (id: number, title: string, status: string, detail:string) => {
-    setEditTodos({
-      id: id,
-      title: title,
-      status: status,
-      detail: detail,
-    });
-    console.log(todos);
+  const onUpdateSubmit = () => {
+    setTodos(editTodos);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -89,11 +79,12 @@ export const App = () => {
   const handleStatusChange = (id: number, e:any ) => {
     const newTodos = todos.map((todo) => ({...todo}));
 
-    setTodos(
+    setEditTodos(
       newTodos.map((todo) => 
         todo.id === id ? { ...todo, status: e.target.value } : todo
       )
     );
+    console.log(editTodos);
   };
 
   useEffect(() => {
@@ -216,7 +207,7 @@ export const App = () => {
               }
               <div className='btns'>
                 { todoEditing ?
-                  <button className='editConfirmButton' onClick={() => onUpdateSubmit(todo.id, todo.title, todo.detail, todo.status)}>確定</button>
+                  <button className='editConfirmButton' onClick={() => onUpdateSubmit()}>確定</button>
                   : <button className='editConfirmButton' onClick={() => onEdit(todo.id)}>更新</button>
                 }
                 <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
