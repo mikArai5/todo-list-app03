@@ -16,6 +16,7 @@ export const App = () => {
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
 
+
   const handleSubmit = () => {
     if (!text) return;
 
@@ -35,7 +36,6 @@ export const App = () => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
           todo.value = value;
-          todo.detail = detail;
         }
         return todo;
       });
@@ -102,9 +102,7 @@ export const App = () => {
           );
           break;
         case "全て" :
-          setFilteredTodos(
-            todos.filter((todo) => todo.status === "未着手" || "進行中" || "完了")
-          );
+          setFilteredTodos(todos);
           break;
       default:
         setFilteredTodos(todos);
