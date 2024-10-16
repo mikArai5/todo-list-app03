@@ -17,10 +17,8 @@ export const App = () => {
   const [ filter, setFilter ] = useState('未着手');
   const [ editTodos, setEditTodos ] = useState<Todo[]>([]);
 
-
-
   const handleSubmit = () => {
-    if (!text) return;
+    if (!text || !detail) return;
 
     const newTodo: Todo = {
       id: todos.length + 1,
@@ -32,6 +30,14 @@ export const App = () => {
     setText('');
     setDetail('');
   }
+
+  const handleStatusChange = (id: number, e:any ) => {
+    const editStatus =  todos.map((todo) => 
+      todo.id === id ? { ...todo, status: e.target.value } : todo
+    )
+    setEditTodos(editStatus);
+    console.log(editStatus);
+  };
 
   const handleTitleEdit = (id: number, title: string) => {
     setEditTodos((todos) => {
@@ -74,17 +80,6 @@ export const App = () => {
         return todo.id !== id;
       });
     });
-  };
-
-  const handleStatusChange = (id: number, e:any ) => {
-    const newTodos = todos.map((todo) => ({...todo}));
-
-    setEditTodos(
-      newTodos.map((todo) => 
-        todo.id === id ? { ...todo, status: e.target.value } : todo
-      )
-    );
-    console.log(editTodos);
   };
 
   useEffect(() => {
