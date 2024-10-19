@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 
 type Todo = {
+  id: number;
   title: string;
-  readonly id: number;
+  status: string;
+  detail: string;
+}
+
+type EditTodo = {
+  id: number;
+  title: string;
   status: string;
   detail: string;
 }
@@ -15,7 +22,12 @@ export const App = () => {
   const [ detail, setDetail ] = useState('');
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
-  const [ editTodo, setEditTodo ] = useState<Todo[]>([]);
+  const [ editTodo, setEditTodo ] = useState<EditTodo>({  
+    id: 0,
+    title: "",
+    status: "",
+    detail: "",
+  });
 
   const handleSubmit = () => {
     if (!text || !detail) return;
@@ -31,36 +43,16 @@ export const App = () => {
     setDetail('');
   }
 
-  const handleStatusChange = (id: number, e:any ) => {
-    const editStatus =  todos.map((todo) => 
-      todo.id === id ? { ...todo, status: e.target.value } : todo
-    )
-    setEditTodo(editStatus);
-    console.log(editStatus);
+  const handleStatusChange = ( e:any ) => {
+    setEditTodo(e.target.value);
   };
 
-  const handleTitleEdit = (id: number, title: string) => {
-    setEditTodo((todos) => {
-      const newTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.title = title;
-        }
-        return todo;
-      });
-      return newTodos;
-    });
+  const handleTitleEdit = (e:any) => {
+    setEditTodo(e.target.value);
   }
 
-  const handleDetailEdit = (id: number, detail: string) => {
-    setEditTodo((todos) => {
-      const newTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.detail = detail;
-        }
-        return todo;
-      });
-      return newTodos;
-    });
+  const handleDetailEdit = ( e:any ) => {
+    setTodoEditing(e.target.value);
   }
 
   const onEdit = (id: number) => {
@@ -153,31 +145,31 @@ export const App = () => {
               key={todo.id}
             >
               { onClickedId === editTodo.id ? 
-              <div className="flex">
-                  <select 
-                    className='inputStatus'
-                    value={editTodo.status} 
-                    onChange={(e) => handleStatusChange(editTodo.id, e)}
-                  >
-                    <option value="未着手">未着手</option>
-                    <option value="進行中">進行中</option>
-                    <option value="完了">完了</option>
-                  </select>
-                  <div className='todoEditContent'>
-                    <input 
-                    type="text" 
-                    value={editTodo.title} 
-                    autoFocus
-                    className='editForm'
-                    onChange={(e) => handleTitleEdit(editTodo.id, e.target.value)}
-                    />
-                    <textarea 
-                      className='editTextarea'
-                      value={editTodo.detail}
-                      onChange={(e) => handleDetailEdit(editTodo.id, e.target.value)}
-                    />
-                  </div>
-              </div>
+                <div className="flex">
+                    <select 
+                      className='inputStatus'
+                      value={todo.status} 
+                      onChange={(e) => handleStatusChange(e.target.value)}
+                    >
+                      <option value="未着手">未着手</option>
+                      <option value="進行中">進行中</option>
+                      <option value="完了">完了</option>
+                    </select>
+                    <div className='todoEditContent'>
+                      <input 
+                        type="text" 
+                        value={todo.title} 
+                        autoFocus
+                        className='editForm'
+                        onChange={(e) => handleTitleEdit(e.target.value)}
+                      />
+                      <textarea 
+                        className='editTextarea'
+                        value={todo.detail}
+                        onChange={(e) => handleDetailEdit(e.target.value)}
+                      />
+                    </div>
+                </div>
                 : 
                 <table className='todoTable'>
                   <tbody>
@@ -203,7 +195,7 @@ export const App = () => {
               <div className='btns'>
                 { todoEditing ?
                   <button className='editConfirmButton' onClick={() => onUpdateSubmit()}>確定</button>
-                  : <button className='editConfirmButton' onClick={() => onEdit(todo.id)}>更新</button>
+                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id)}>更新</button>
                 }
                 <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
               </div>
