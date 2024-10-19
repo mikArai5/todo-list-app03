@@ -15,7 +15,7 @@ export const App = () => {
   const [ detail, setDetail ] = useState('');
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
-  const [ editTodos, setEditTodos ] = useState<Todo[]>([]);
+  const [ editTodo, setEditTodo ] = useState<Todo[]>([]);
 
   const handleSubmit = () => {
     if (!text || !detail) return;
@@ -35,12 +35,12 @@ export const App = () => {
     const editStatus =  todos.map((todo) => 
       todo.id === id ? { ...todo, status: e.target.value } : todo
     )
-    setEditTodos(editStatus);
+    setEditTodo(editStatus);
     console.log(editStatus);
   };
 
   const handleTitleEdit = (id: number, title: string) => {
-    setEditTodos((todos) => {
+    setEditTodo((todos) => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
           todo.title = title;
@@ -52,7 +52,7 @@ export const App = () => {
   }
 
   const handleDetailEdit = (id: number, detail: string) => {
-    setEditTodos((todos) => {
+    setEditTodo((todos) => {
       const newTodos = todos.map((todo) => {
         if (todo.id === id) {
           todo.detail = detail;
@@ -69,7 +69,7 @@ export const App = () => {
   }
 
   const onUpdateSubmit = () => {
-    setTodos(editTodos);
+    setTodos(editTodo);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -152,12 +152,12 @@ export const App = () => {
               className='addedList'
               key={todo.id}
             >
-              { onClickedId === todo.id ? 
+              { onClickedId === editTodo.id ? 
               <div className="flex">
                   <select 
                     className='inputStatus'
-                    value={todo.status} 
-                    onChange={(e) => handleStatusChange(todo.id, e)}
+                    value={editTodo.status} 
+                    onChange={(e) => handleStatusChange(editTodo.id, e)}
                   >
                     <option value="未着手">未着手</option>
                     <option value="進行中">進行中</option>
@@ -169,12 +169,12 @@ export const App = () => {
                     value={todo.title} 
                     autoFocus
                     className='editForm'
-                    onChange={(e) => handleTitleEdit(todo.id, e.target.value)}
+                    onChange={(e) => handleTitleEdit(editTodo.id, e.target.value)}
                     />
                     <textarea 
                       className='editTextarea'
                       value={todo.detail}
-                      onChange={(e) => handleDetailEdit(todo.id, e.target.value)}
+                      onChange={(e) => handleDetailEdit(editTodo.id, e.target.value)}
                     />
                   </div>
               </div>
