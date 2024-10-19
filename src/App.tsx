@@ -166,14 +166,14 @@ export const App = () => {
                   <div className='todoEditContent'>
                     <input 
                     type="text" 
-                    value={todo.title} 
+                    value={editTodo.title} 
                     autoFocus
                     className='editForm'
                     onChange={(e) => handleTitleEdit(editTodo.id, e.target.value)}
                     />
                     <textarea 
                       className='editTextarea'
-                      value={todo.detail}
+                      value={editTodo.detail}
                       onChange={(e) => handleDetailEdit(editTodo.id, e.target.value)}
                     />
                   </div>
