@@ -23,7 +23,7 @@ export const App = () => {
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
   const [ editTodo, setEditTodo ] = useState<EditTodo>({  
-    id: 0,
+    id: 1,
     title: "",
     status: "",
     detail: "",
@@ -55,7 +55,7 @@ export const App = () => {
   }
 
   const handleDetailEdit = ( e:any ) => {
-    const changedEditTodo = {...editTodo, delete:e.target.value}
+    const changedEditTodo = {...editTodo, detail:e.target.value}
     setEditTodo(changedEditTodo);
   }
 
@@ -71,8 +71,8 @@ export const App = () => {
       status: editTodo.status,
       detail: editTodo.detail,
     };
-    setEditTodo(newTodo);
-    console.log(newTodo);
+    setTodos((todos) => [newTodo, ...todos]);
+    console.log(todos);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -169,14 +169,14 @@ export const App = () => {
                     <div className='todoEditContent'>
                       <input 
                         type="text" 
-                        value={todo.title} 
+                        value={editTodo.title} 
                         autoFocus
                         className='editForm'
                         onChange={handleTitleEdit}
                       />
                       <textarea 
                         className='editTextarea'
-                        value={todo.detail}
+                        value={editTodo.detail}
                         onChange={handleDetailEdit}
                       />
                     </div>
@@ -186,18 +186,18 @@ export const App = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <span className='status'>{editTodo.status}</span>
+                        <span className='status'>{todo.status}</span>
                       </td>
                       <td>
-                        <p>{editTodo.title}</p>
+                        <p>{todo.title}</p>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <p className='taskNum'>No.{editTodo.id}</p>
+                        <p className='taskNum'>No.{todo.id}</p>
                       </td>
                       <td>
-                        <p>{editTodo.detail}</p>
+                        <p>{todo.detail}</p>
                       </td>
                     </tr>
                   </tbody>
