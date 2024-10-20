@@ -71,7 +71,8 @@ export const App = () => {
       status: editTodo.status,
       detail: editTodo.detail,
     };
-    setTodos((todos) => [newTodo, ...todos]);
+    setEditTodo(newTodo);
+    console.log(newTodo);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -159,7 +160,7 @@ export const App = () => {
                     <select 
                       className='inputStatus'
                       value={todo.status} 
-                      onChange={(e) => handleStatusChange(e.target.value)}
+                      onChange={handleStatusChange}
                     >
                       <option value="未着手">未着手</option>
                       <option value="進行中">進行中</option>
@@ -171,12 +172,12 @@ export const App = () => {
                         value={todo.title} 
                         autoFocus
                         className='editForm'
-                        onChange={(e) => handleTitleEdit(e.target.value)}
+                        onChange={handleTitleEdit}
                       />
                       <textarea 
                         className='editTextarea'
                         value={todo.detail}
-                        onChange={(e) => handleDetailEdit(e.target.value)}
+                        onChange={handleDetailEdit}
                       />
                     </div>
                 </div>
@@ -185,18 +186,18 @@ export const App = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <span className='status'>{todo.status}</span>
+                        <span className='status'>{editTodo.status}</span>
                       </td>
                       <td>
-                        <p>{todo.title}</p>
+                        <p>{editTodo.title}</p>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <p className='taskNum'>No.{todo.id}</p>
+                        <p className='taskNum'>No.{editTodo.id}</p>
                       </td>
                       <td>
-                        <p>{todo.detail}</p>
+                        <p>{editTodo.detail}</p>
                       </td>
                     </tr>
                   </tbody>
