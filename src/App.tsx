@@ -71,7 +71,7 @@ export const App = () => {
       status: editTodo.status,
       detail: editTodo.detail,
     };
-    setTodos((todos) => [newTodo, ...todos]);
+    setTodos([newTodo]);
     console.log(todos);
     setOnClickedId(undefined);
     setTodoEditing(false);
