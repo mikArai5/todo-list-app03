@@ -44,15 +44,19 @@ export const App = () => {
   }
 
   const handleStatusChange = ( e:any ) => {
-    setEditTodo(e.target.value);
+    const changedEditTodo = {...editTodo, status:e.target.value}
+    setEditTodo(changedEditTodo);
   };
 
   const handleTitleEdit = (e:any) => {
-    setEditTodo(e.target.value);
+    const changedEditTodo = {...editTodo, title:e.target.value}
+    setEditTodo(changedEditTodo);
+    console.log(editTodo);
   }
 
   const handleDetailEdit = ( e:any ) => {
-    setTodoEditing(e.target.value);
+    const changedEditTodo = {...editTodo, delete:e.target.value}
+    setEditTodo(changedEditTodo);
   }
 
   const onEdit = (id: number) => {
@@ -61,7 +65,7 @@ export const App = () => {
   }
 
   const onUpdateSubmit = () => {
-    setTodos(editTodo);
+
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
