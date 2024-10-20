@@ -15,14 +15,13 @@ type EditTodo = {
 }
 
 export const App = () => {
-  const [ text, setText ] = useState('');
-  const [ todos, setTodos ] = useState<Todo[]>([]);
-  const [ onClickedId, setOnClickedId ] = useState<number>();
-  const [ todoEditing, setTodoEditing ] = useState(false);
-  const [ detail, setDetail ] = useState('');
-  const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
-  const [ filter, setFilter ] = useState('未着手');
-  const [ editTodo, setEditTodo ] = useState<EditTodo>({  
+  const [text, setText] = useState('');
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todoEditing, setTodoEditing] = useState(false);
+  const [detail, setDetail] = useState('');
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
+  const [filter, setFilter] = useState('未着手');
+  const [editTodo, setEditTodo] = useState<EditTodo>({
     id: 0,
     title: "",
     status: "",
@@ -43,43 +42,49 @@ export const App = () => {
     setDetail('');
   }
 
-  const handleStatusChange = ( e:any ) => {
-    const changedEditTodo = {...editTodo, status:e.target.value}
+  const handleStatusChange = (e: any) => {
+    const changedEditTodo = { ...editTodo, status: e.target.value }
     setEditTodo(changedEditTodo);
   };
 
-  const handleTitleEdit = (e:any) => {
-    const changedEditTodo = {...editTodo, title:e.target.value}
+  const handleTitleEdit = (e: any) => {
+    const changedEditTodo = { ...editTodo, title: e.target.value }
     setEditTodo(changedEditTodo);
     console.log(editTodo);
   }
 
-  const handleDetailEdit = ( e:any ) => {
-    const changedEditTodo = {...editTodo, detail:e.target.value}
+  const handleDetailEdit = (e: any) => {
+    const changedEditTodo = { ...editTodo, detail: e.target.value }
     setEditTodo(changedEditTodo);
   }
 
   const onEdit = (id: number) => {
-    setOnClickedId(id);
     setTodoEditing(true);
+    const findTodo = todos.find(todo => todo.id === id)
+    findTodo && setEditTodo(findTodo);
   }
 
   const onUpdateSubmit = (id: number, status: string, title: string, detail: string) => {
     setTodos((todos) => {
       const newTodos = todos.map((todo) => {
-        if ( todo.id === editTodo.id ) {
-          editTodo.id = id;
-          editTodo.title = title;
-          editTodo.status = status;
-          editTodo.detail = detail;
+        if (todo.id === editTodo.id) {
+          todo.id = id;
+          todo.title = title;
+          todo.status = status;
+          todo.detail = detail;
         }
         return todo;
       });
       return newTodos;
     });
 
-    setOnClickedId(undefined);
     setTodoEditing(false);
+    setEditTodo({
+      id: 0,
+      title: "",
+      status: "",
+      detail: "",
+    })
   }
 
   const handleDelete = (id: number) => {
@@ -93,26 +98,26 @@ export const App = () => {
   useEffect(() => {
     const filteringTodos = () => {
       switch (filter) {
-        case "未着手" :
+        case "未着手":
           setFilteredTodos(
             todos.filter((todo) => todo.status === "未着手")
           );
           break;
-        case "進行中" :
+        case "進行中":
           setFilteredTodos(
             todos.filter((todo) => todo.status === "進行中")
           );
           break;
-        case "完了" :
+        case "完了":
           setFilteredTodos(
             todos.filter((todo) => todo.status === "完了")
           );
           break;
-        case "全て" :
+        case "全て":
           setFilteredTodos(todos);
           break;
-      default:
-        setFilteredTodos(todos);
+        default:
+          setFilteredTodos(todos);
       }
     };
     filteringTodos();
@@ -120,51 +125,51 @@ export const App = () => {
 
   return (
     <>
-    <h2>TODOリスト</h2>
-    <div className='todoList'>
-      <form 
-        className='addForm'
-        onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}>
-        <label htmlFor="title">Title</label>
-        <input 
-          id="title"
-          type="text" 
-          className='inputForm' 
-          value={text} 
-          onChange={(e) => setText(e.target.value)}
-        />
-        <label htmlFor="detail">Detail</label>
-        <textarea 
-          id="detail"
-          value={detail}
-          onChange={(e) => setDetail(e.target.value)}
-        />
-        <input className='addButton' type="submit" value="追加" onSubmit={handleSubmit} />
-      </form>
-      <select 
-        value={filter} 
-        onChange={(e) => setFilter(e.target.value)}
-      >
-        <option value="全て">全て</option>
-        <option value="未着手">未着手</option>
-        <option value="進行中">進行中</option>
-        <option value="完了">完了</option>
-      </select>
-      <ul className=''>
-        {filteredTodos.map((todo) => {
-          return (
-            <li 
-              className='addedList'
-              key={todo.id}
-            >
-              { onClickedId === editTodo.id ? 
-                <div className="flex">
-                    <select 
+      <h2>TODOリスト</h2>
+      <div className='todoList'>
+        <form
+          className='addForm'
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}>
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            className='inputForm'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <label htmlFor="detail">Detail</label>
+          <textarea
+            id="detail"
+            value={detail}
+            onChange={(e) => setDetail(e.target.value)}
+          />
+          <input className='addButton' type="submit" value="追加" onSubmit={handleSubmit} />
+        </form>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="全て">全て</option>
+          <option value="未着手">未着手</option>
+          <option value="進行中">進行中</option>
+          <option value="完了">完了</option>
+        </select>
+        <ul className=''>
+          {filteredTodos.map((todo) => {
+            return (
+              <li
+                className='addedList'
+                key={todo.id}
+              >
+                {todo.id === editTodo.id ?
+                  <div className="flex">
+                    <select
                       className='inputStatus'
-                      value={editTodo.status} 
+                      value={editTodo.status}
                       onChange={handleStatusChange}
                     >
                       <option value="未着手">未着手</option>
@@ -172,55 +177,55 @@ export const App = () => {
                       <option value="完了">完了</option>
                     </select>
                     <div className='todoEditContent'>
-                      <input 
-                        type="text" 
-                        value={editTodo.title} 
+                      <input
+                        type="text"
+                        value={editTodo.title}
                         autoFocus
                         className='editForm'
                         onChange={handleTitleEdit}
                       />
-                      <textarea 
+                      <textarea
                         className='editTextarea'
                         value={editTodo.detail}
                         onChange={handleDetailEdit}
                       />
                     </div>
-                </div>
-                : 
-                <table className='todoTable'>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className='status'>{todo.status}</span>
-                      </td>
-                      <td>
-                        <p>{todo.title}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p className='taskNum'>No.{todo.id}</p>
-                      </td>
-                      <td>
-                        <p>{todo.detail}</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              }
-              <div className='btns'>
-                { todoEditing ?
-                  <button className='editConfirmButton' onClick={() => onUpdateSubmit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>確定</button>
-                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id)}>更新</button>
+                  </div>
+                  :
+                  <table className='todoTable'>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span className='status'>{todo.status}</span>
+                        </td>
+                        <td>
+                          <p>{todo.title}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p className='taskNum'>No.{todo.id}</p>
+                        </td>
+                        <td>
+                          <p>{todo.detail}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 }
-                <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
-              </div>
-            </li>
-            
-          )
-        })}
-      </ul>
-    </div>
+                <div className='btns'>
+                  {todoEditing ?
+                    <button className='editConfirmButton' onClick={() => onUpdateSubmit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>確定</button>
+                    : <button className='editConfirmButton' onClick={() => onEdit(todo.id)}>更新</button>
+                  }
+                  <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
+                </div>
+              </li>
+
+            )
+          })}
+        </ul>
+      </div>
     </>
   );
 };
