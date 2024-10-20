@@ -71,7 +71,7 @@ export const App = () => {
       status: editTodo.status,
       detail: editTodo.detail,
     };
-    setTodos([newTodo]);
+    setTodos((todos) => [newTodo, ...todos]);
     console.log(todos);
     setOnClickedId(undefined);
     setTodoEditing(false);
@@ -159,7 +159,7 @@ export const App = () => {
                 <div className="flex">
                     <select 
                       className='inputStatus'
-                      value={todo.status} 
+                      value={editTodo.status} 
                       onChange={handleStatusChange}
                     >
                       <option value="未着手">未着手</option>
