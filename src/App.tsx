@@ -65,7 +65,13 @@ export const App = () => {
   }
 
   const onUpdateSubmit = () => {
-
+    const newTodo: EditTodo = {
+      id: editTodo.id,
+      title: editTodo.title,
+      status: editTodo.status,
+      detail: editTodo.detail,
+    };
+    setTodos((todos) => [newTodo, ...todos]);
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
