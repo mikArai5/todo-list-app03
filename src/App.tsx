@@ -23,7 +23,7 @@ export const App = () => {
   const [ filteredTodos, setFilteredTodos ] = useState<Todo[]>([]);
   const [ filter, setFilter ] = useState('未着手');
   const [ editTodo, setEditTodo ] = useState<EditTodo>({  
-    id: 1,
+    id: 0,
     title: "",
     status: "",
     detail: "",
@@ -64,15 +64,20 @@ export const App = () => {
     setTodoEditing(true);
   }
 
-  const onUpdateSubmit = () => {
-    const newTodo: EditTodo = {
-      id: editTodo.id,
-      title: editTodo.title,
-      status: editTodo.status,
-      detail: editTodo.detail,
-    };
-    setTodos((todos) => [newTodo, ...todos]);
-    console.log(todos);
+  const onUpdateSubmit = (id: number, status: string, title: string, detail: string) => {
+    setTodos((todos) => {
+      const newTodos = todos.map((todo) => {
+        if ( todo.id === editTodo.id ) {
+          editTodo.id = id;
+          editTodo.title = title;
+          editTodo.status = status;
+          editTodo.detail = detail;
+        }
+        return todo;
+      });
+      return newTodos;
+    });
+
     setOnClickedId(undefined);
     setTodoEditing(false);
   }
@@ -206,7 +211,7 @@ export const App = () => {
               <div className='btns'>
                 { todoEditing ?
                   <button className='editConfirmButton' onClick={() => onUpdateSubmit()}>確定</button>
-                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id)}>更新</button>
+                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>更新</button>
                 }
                 <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
               </div>
