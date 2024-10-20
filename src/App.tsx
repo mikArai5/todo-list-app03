@@ -210,8 +210,8 @@ export const App = () => {
               }
               <div className='btns'>
                 { todoEditing ?
-                  <button className='editConfirmButton' onClick={() => onUpdateSubmit()}>確定</button>
-                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>更新</button>
+                  <button className='editConfirmButton' onClick={() => onUpdateSubmit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>確定</button>
+                  : <button className='editConfirmButton' onClick={() => onEdit(editTodo.id)}>更新</button>
                 }
                 <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
               </div>
