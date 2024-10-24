@@ -17,7 +17,6 @@ type EditTodo = {
 export const App = () => {
   const [text, setText] = useState('');
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [todoEditing, setTodoEditing] = useState(false);
   const [detail, setDetail] = useState('');
   const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState('未着手');
@@ -59,9 +58,10 @@ export const App = () => {
   }
 
   const onEdit = (id: number) => {
-    setTodoEditing(true);
     const findTodo = todos.find(todo => todo.id === id)
     findTodo && setEditTodo(findTodo);
+    console.log(findTodo);
+    console.log(editTodo);
   }
 
   const onUpdateSubmit = (id: number, status: string, title: string, detail: string) => {
@@ -78,7 +78,6 @@ export const App = () => {
       return newTodos;
     });
 
-    setTodoEditing(false);
     setEditTodo({
       id: 0,
       title: "",
@@ -214,7 +213,7 @@ export const App = () => {
                   </table>
                 }
                 <div className='btns'>
-                  {todoEditing ?
+                  {todo.id === editTodo.id ?
                     <button className='editConfirmButton' onClick={() => onUpdateSubmit(editTodo.id, editTodo.status, editTodo.title, editTodo.detail)}>確定</button>
                     : <button className='editConfirmButton' onClick={() => onEdit(todo.id)}>更新</button>
                   }
