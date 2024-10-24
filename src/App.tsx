@@ -220,7 +220,6 @@ export const App = () => {
                   <button className='deleteButton' onClick={() => handleDelete(todo.id)}>削除</button>
                 </div>
               </li>
-
             )
           })}
         </ul>
